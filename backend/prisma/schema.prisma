@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model RFP {
+  id           Int      @id @default(autoincrement())
+  rawText      String   @db.Text
+  budget       Float?
+  currency     String   @default("INR")
+  deliveryDays String?
+  paymentTerms String?
+  warranty     String?
+  createdAt    DateTime @default(now())
+
+  items   RFPItem[]
+  email email[]
+}
+
+model RFPItem {
+  id       Int     @id @default(autoincrement())
+  category String?
+  quantity String?
+  specs    String?
+
+  rfpId Int
+  rfp   RFP @relation(fields: [rfpId], references: [id])
+}
+
+model Vendors {
+  id      Int       @id @default(autoincrement())
+  name    String
+  email   String    @unique
+  sentRfp email[]
+}
+
+model email {
+  id        Int            @id @default(autoincrement())
+  rfpId     Int
+  vendorId  Int?
+  direction EmailDirection
+  subject   String
+  body      String         @db.Text
+  fromEmail String
+  toEmail   String
+  messageId String?
+  status    EmailStatus    @default(SENT)
+  createdAT DateTime       @default(now())
+  rfp       RFP            @relation(fields: [rfpId], references: [id])
+  vendor    Vendors?       @relation(fields: [vendorId], references: [id])
+}
+
+enum EmailDirection {
+  SENT
+  RECEIVED
+}
+
+enum EmailStatus {
+  SENT
+  DELIVERED
+  FAILED
+  RECEIVED
+}
+
+model Proposal {
+  id Int @id @default(autoincrement())
+  rfpId Int
+  emailId Int
+  vendorId Int
+  rawText String @db.Text
+  totalBudget Int?
+  deliveryDays  Int?
+  warranty String?
+  paymentTerms  String?
+  parsedJson  Json?
+  createdAt     DateTime @default(now())
+
+}

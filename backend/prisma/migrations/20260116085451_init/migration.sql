@@ -1,0 +1,27 @@
+-- CreateTable
+CREATE TABLE `RFP` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `rawText` TEXT NOT NULL,
+    `budget` DOUBLE NOT NULL,
+    `currency` VARCHAR(191) NOT NULL DEFAULT 'INR',
+    `deliveryDays` INTEGER NOT NULL,
+    `paymentTerms` VARCHAR(191) NOT NULL,
+    `warrantyYears` INTEGER NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `RFPItem` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `type` VARCHAR(191) NOT NULL,
+    `quantity` INTEGER NOT NULL,
+    `specs` VARCHAR(191) NOT NULL,
+    `rfpId` INTEGER NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `RFPItem` ADD CONSTRAINT `RFPItem_rfpId_fkey` FOREIGN KEY (`rfpId`) REFERENCES `RFP`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
