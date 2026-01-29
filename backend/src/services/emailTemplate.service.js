@@ -10,7 +10,7 @@ export const rfpEmailTemplate = (rfpdata) => {
     subject: "Request for Proposal - Procurement Requirements",
     body: `Dear Vendor,
 
-Arechain Company invites your organization to submit a proposal for the following procurement requirements:
+ABC Company invites your organization to submit a proposal for the following procurement requirements:
 
 ${items}
 
@@ -23,7 +23,7 @@ Interested vendors are requested to submit their detailed proposal including pri
 
 Sincerely,
 Procurement Manager
-Arechain Company`
+ABC Company`
   };
 };
 

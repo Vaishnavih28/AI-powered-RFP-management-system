@@ -82,7 +82,7 @@ model Proposal {
   deliveryDays  Int?
   warranty String?
   paymentTerms  String?
-  parsedJson  Json?
   createdAt     DateTime @default(now())
+  notes String @db.Text
 
 }

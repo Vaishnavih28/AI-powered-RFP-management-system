@@ -19,7 +19,7 @@ const useRfp =()=>{
             
         } catch (error) {
             console.error("Error creating RFP:", error);
-            toast.error(error.response.data.error);
+            toast.error(error.message);
         }
     }
 
@@ -34,16 +34,17 @@ const useRfp =()=>{
             
         } catch (error) {
             console.error("Error generating mail:", error);
-            toast.error(error.response.data.error);
+            toast.error(error.message);
             
         }
 
     }
 
-    const  sendEmailToVendor = async(email, rfpId, vendorEmails )=>{
+    const  sendEmailToVendor = async(subject, body, rfpId,vendorEmails )=>{
         try {
 
-            const response = await axios.post("/api/rfp/sendemail", {email, rfpId,vendorEmails});
+            console.log("Hello from useref")
+            const response = await axios.post("/api/rfp/sendemail", {subject, body, rfpId,vendorEmails});
 
            return response.data
 
@@ -52,7 +53,7 @@ const useRfp =()=>{
         } catch (error) {
 
              console.error("Error sending mail to vendor:", error);
-            toast.error(error.response.data.error);
+            toast.error(error.message);
             
         }
     }
@@ -65,7 +66,7 @@ const useRfp =()=>{
             
         } catch (error) {
             console.error("Error fetching vendors:", error);
-            toast.error(error.response.data.error);
+            toast.error(error.message);
             
         }
     }
@@ -75,14 +76,14 @@ const useRfp =()=>{
 
         
 
-            const response = await axios.post("/api/rfp/recommendation", {rfpdata});
+            const response = await axios.post("/api/rfp/recommendation", rfpdata);
             return response.data
 
 
             
         } catch (error) {
-            console.error("Error fetching vendors:", error);
-            toast.error(error.response.data.error);
+            console.error("Error Recommendation proposal:", error);
+            toast.error(error.message);
             
         }
     }

@@ -10,7 +10,7 @@ function Dashboard() {
             <p className="text-gray-500">AI-powered RFP management system</p>
             <div className="flex flex-col items-center justify-center w-full h-full gap-4">
                 <h2 className=" text-xl font-bold">Create RFP and get recommendations on proposals received using AI!</h2>
-                <Button onClick={() => navigate('/dashboard/rfp')} className='bg-purple-800 hover:bg-purple-950'>Get Started</Button>
+                <Button onClick={() => navigate('/dashboard/rfp')} className='bg-purple-800 hover:bg-purple-950 cursor-pointer'>Get Started</Button>
             </div>
         </div>
     )

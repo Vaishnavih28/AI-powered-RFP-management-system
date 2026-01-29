@@ -7,6 +7,7 @@ export const sendRfpEmailToVendors = async ({
   body,
   vendorEmails
 }) => {
+  console.log("Hello from sendRfpEmailTo Vendors")
   if (!body || body.trim() === "") {
     throw new Error("Email body cannot be empty");
   }

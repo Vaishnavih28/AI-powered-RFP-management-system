@@ -1,4 +1,4 @@
-import { parseRfpWithAI, summaryRfpAI, emailRfpAI, parseProposalAI } from "../services/rfpAi.service.js";
+import { parseRfpWithAI, summaryRfpAI, parseProposalAI,recommendVendorAI } from "../services/rfpAi.service.js";
 import {generateEmailFromTemplate} from "../services/emailTemplate.service.js"
 import prisma from '../../prisma/prisma.js';
 import {sendRfpEmailToVendors} from "../services/mailgun.service.js";
@@ -69,6 +69,7 @@ export const generateEmail = async(req, res) =>{
 
 export const sendEmailToVendor = async (req, res) => {
   try {
+    console.log("Hello from sendEmailToVendor")
     const { subject, body, rfpId, vendorEmails } = req.body;
 
     if (!vendorEmails || !subject || !body || !rfpId) {
@@ -167,23 +168,35 @@ export const receiveVendorEmail = async(req, res)=>{
 export const recommendation = async(req, res)=>{
   try {
 
-    const rfpdata = req.body;
+    console.log("hi from recommendation");
+
+    const {rfpdata} = req.body;
+    console.log(rfpdata)
 
     const rfpId = rfpdata.id;
+    console.log(rfpId)
 
   const proposals = await prisma.proposal.findMany({
     where: { rfpId },
     include: { }
   });
 
-  const recommendation = await recommendVendorAI(rfpdata, proposals);
+  console.log(proposals)
 
-    res.json(recommendation);
+  const recommendation = await recommendVendorAI(rfpdata, proposals);
+  
+  const recommendedVendorId = recommendation.recommendedVendorId;
+   const vendor = await prisma.vendors.findUnique({
+      where: { id:recommendedVendorId  }
+    });
+
+
+    res.json({recommendation,vendor});
 
     
     
   } catch (error) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error});
     
   }
 
