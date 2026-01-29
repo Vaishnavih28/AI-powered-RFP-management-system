@@ -19,7 +19,7 @@ function Recommendation() {
     try {
       setLoading(true);
       const res = await recommendationProposal(rfpdata);
-      console.log("result of recommendationProposal ", res)
+
       setRecomData(res);
       setLoading(false);
 

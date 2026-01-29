@@ -2,7 +2,7 @@ import { text } from "express";
 import { geminiModel } from "../config/gemini.js";
 import { RFP_PROMPT } from "../prompts/rfp.prompt.js";
 import { RFP_SUMMARY_PROMPT } from "../prompts/summary.prompt.js";
-import { PARSE_PROPOSAL } from "../prompts/parseproposal.js";
+
 import prisma from "../../prisma/prisma.js";
 
 export const parseRfpWithAI = async (text) => {
@@ -11,7 +11,7 @@ export const parseRfpWithAI = async (text) => {
   const result = await geminiModel.generateContent(prompt);
   const responseText = result.response.text();
 
-  console.log(responseText);
+
 
 
 
@@ -31,26 +31,11 @@ export const summaryRfpAI = async (rfpJson) => {
 
   const result = await geminiModel.generateContent(prompt);
   const responseText = result.response.text();
-  console.log(responseText);
+
   return responseText;
 
 }
 
-// export const emailRfpAI = async (text) => {
-//   console.log("Hi from email AI")
-//   const prompt = RFP_EMAIL_PROMPT(text);
-
-//   const result = await geminiModel.generateContent(prompt);
-//   const responseText = result.response.text();
-
-//   console.log(responseText);
-//   try {
-//     return extractJson(responseText);
-
-//   } catch (err) {
-//     console.error("AI RAW OUTPUT:", textext);
-//     throw new Error("Failed to parse AI response as JSON");
-//   }
 
 
 
@@ -110,7 +95,7 @@ ${text}
 }
 
 export const recommendVendorAI = async(rfpdata, proposals)=>{
-  console.log("Hi from recommendVendorAI")
+  
   const prompt = `
 You are a procurement decision assistant.Compare throughly the Proposals received and provide a report with the summary of the comparision in Comparision and the recommendded vendor Id in recommendedVendorId along with its reason.Give vaid explaination on why u are selecting this vendor  
 Do Not invent data . Do not add any new data. Do NOT include Vendor ID in Comparision
@@ -139,7 +124,7 @@ Schema:
 
   const result = await geminiModel.generateContent(prompt);
   const response = result.response.text();
-  console.log(response);
+ 
 
   try {
     return extractJson(response);
@@ -173,7 +158,7 @@ export const extractJson = (text) => {
     .replace(/```json/g, "")
     .replace(/```/g, "")
     .trim();
-  console.log(cleaned);
+
 
   return JSON.parse(cleaned);
 };

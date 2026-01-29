@@ -7,7 +7,7 @@ export const sendRfpEmailToVendors = async ({
   body,
   vendorEmails
 }) => {
-  console.log("Hello from sendRfpEmailTo Vendors")
+  
   if (!body || body.trim() === "") {
     throw new Error("Email body cannot be empty");
   }
@@ -22,7 +22,7 @@ export const sendRfpEmailToVendors = async ({
   if (vendors.length === 0) {
     throw new Error("No valid vendors found");
   }
-  console.log(vendors);
+
 
   const results = await Promise.allSettled(
     vendors.map(async (vendor) => {

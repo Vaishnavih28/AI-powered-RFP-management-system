@@ -9,7 +9,7 @@ import { useState } from 'react';
 function Summary() {
     const { rfpdata, setEmailData,setVendorsData } = useRfpContext();
     const [loading, setLoading] = useState(false);
-    console.log(rfpdata);
+
     const navigate = useNavigate();
     if (!rfpdata) {
         toast.error("AI failed to generate RFP")

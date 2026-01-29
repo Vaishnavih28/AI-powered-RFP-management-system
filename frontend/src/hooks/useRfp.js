@@ -43,7 +43,7 @@ const useRfp =()=>{
     const  sendEmailToVendor = async(subject, body, rfpId,vendorEmails )=>{
         try {
 
-            console.log("Hello from useref")
+           
             const response = await axios.post("/api/rfp/sendemail", {subject, body, rfpId,vendorEmails});
 
            return response.data

@@ -12,14 +12,13 @@ function EmailLayout() {
   const { rfpdata, emailData, vendorsData } = useRfpContext();
   const [selectedVendors, setSelectedVendors] = useState([]);
   const [loading, setLoading] = useState(false);
-  console.log("rfpdata from email")
-  console.log(rfpdata);
+
   const navigate = useNavigate();
 
 
 
 
-  console.log(emailData);
+ 
 
   const rfpId = rfpdata?.rfpdata?.id
   const body = emailData.body;
@@ -28,17 +27,16 @@ function EmailLayout() {
 
 
   const handleSubmit = async (e) => {
-    console.log("handleSubmit called");
+   
     e.preventDefault();
     const vendorEmails = selectedVendors;
-    console.log(vendorEmails);
+
 
     try {
       setLoading(true);
-      console.log("inside try block")
+   
       const response = await sendEmailToVendor(subject, body, rfpId, vendorEmails);
-      console.log("count of result", response.result.successCount);
-      console.log("count of vendormails", vendorEmails.length);
+
       if (response.result.successCount == vendorEmails.length) {
         navigate("/dashboard/recommendation");
 

@@ -56,7 +56,7 @@ export const generateEmail = async(req, res) =>{
     const { rfpdata } = req.body;
 
     const email = generateEmailFromTemplate(rfpdata);
-    console.log(email);
+   
 
     return res.status(200).json(email);
   
@@ -69,7 +69,7 @@ export const generateEmail = async(req, res) =>{
 
 export const sendEmailToVendor = async (req, res) => {
   try {
-    console.log("Hello from sendEmailToVendor")
+   
     const { subject, body, rfpId, vendorEmails } = req.body;
 
     if (!vendorEmails || !subject || !body || !rfpId) {
@@ -84,7 +84,7 @@ export const sendEmailToVendor = async (req, res) => {
       subject,
       body
     });
-    console.log("result", result)
+ 
 
     return res.status(200).json({
       message: "RFP email sent successfully",
@@ -102,7 +102,7 @@ export const sendEmailToVendor = async (req, res) => {
 
 export const receiveVendorEmail = async(req, res)=>{
   try {
-    console.log(req.body);
+   
     const sender = req.body.from;
     const subject = req.body.subject;
     const emailText = req.body["body-plain"] || "";
@@ -168,20 +168,19 @@ export const receiveVendorEmail = async(req, res)=>{
 export const recommendation = async(req, res)=>{
   try {
 
-    console.log("hi from recommendation");
+   
 
     const {rfpdata} = req.body;
-    console.log(rfpdata)
 
     const rfpId = rfpdata.id;
-    console.log(rfpId)
+
 
   const proposals = await prisma.proposal.findMany({
     where: { rfpId },
     include: { }
   });
 
-  console.log(proposals)
+  
 
   const recommendation = await recommendVendorAI(rfpdata, proposals);
   
